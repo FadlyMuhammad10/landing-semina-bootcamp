@@ -2,11 +2,13 @@
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import Home from "./pages/Home";
-import Detail from "./pages/Detail";
 import Checkout from "./pages/Checkout";
+import Detail from "./pages/Detail";
+import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import ProtectedRoute from "./components/ProtectedRoute";
+import GuestRoute from "./components/GuestRoute";
 
 function App() {
   const router = createBrowserRouter([
@@ -15,20 +17,32 @@ function App() {
       element: <Home />,
     },
     {
-      path: "/details",
+      path: "/details/:id",
       element: <Detail />,
     },
     {
       path: "/checkout",
-      element: <Checkout />,
+      element: (
+        <ProtectedRoute>
+          <Checkout />,
+        </ProtectedRoute>
+      ),
     },
     {
       path: "/login",
-      element: <Login />,
+      element: (
+        <GuestRoute>
+          <Login />
+        </GuestRoute>
+      ),
     },
     {
       path: "/register",
-      element: <Register />,
+      element: (
+        <GuestRoute>
+          <Register />
+        </GuestRoute>
+      ),
     },
   ]);
   return <RouterProvider router={router} />;

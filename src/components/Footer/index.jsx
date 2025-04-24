@@ -11,7 +11,7 @@ const Footer = () => {
                 className="cursor-pointer"
               />
               <p className="text-gray mt-5">
-                Semina adalah tempat di mana <br /> anda dapat mencari event
+                Ngacara adalah tempat di mana <br /> anda dapat mencari event
                 sesuai <br />
                 dengan minat & terdekat.
               </p>
@@ -70,7 +70,7 @@ const Footer = () => {
             </div>
           </div>
           <div className="flex justify-center mt-10">
-            <p className="text-gray">All Rights Reserved. Semina Angga 2022.</p>
+            <p className="text-gray">All Rights Reserved. Copyright 2025.</p>
           </div>
         </div>
       </footer>

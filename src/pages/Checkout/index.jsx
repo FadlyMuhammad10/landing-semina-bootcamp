@@ -1,10 +1,37 @@
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import { IoTimerOutline } from "react-icons/io5";
 import { MdOutlineDateRange } from "react-icons/md";
-import Navbar from "../../components/Navbar";
 import FormCheckout from "../../components/FormCheckout";
+import Navbar from "../../components/Navbar";
+import { useEffect, useState } from "react";
+import { getData } from "../../utils/fetch";
 
 const Checkout = () => {
+  const [event, setEvent] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const { event } = JSON.parse(localStorage.getItem("payload1"));
+
+    const fetchEvent = async () => {
+      try {
+        const res = await getData(`/events/${event}`);
+        if (res.error) {
+          setError(res.error);
+        } else {
+          setEvent(res.data); // sesuaikan struktur respons API-mu
+        }
+      } catch (error) {
+        setError("Terjadi kesalahan saat memuat data event.");
+        setLoading(false);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchEvent();
+  }, []);
   return (
     <>
       <div className="bg-navy ">
@@ -16,7 +43,9 @@ const Checkout = () => {
           <div className="w-3/4 mx-auto">
             <div className=" flex flex-row justify-between items-center py-10">
               <img
-                src="/images/banner-1.png"
+                src={`${import.meta.env.VITE_HOST_IMAGE_DEV}/${
+                  event?.image.name
+                }`}
                 alt="checkout"
                 width={400}
                 height={260}
@@ -25,29 +54,47 @@ const Checkout = () => {
 
               <div className="flex flex-col gap-3 ">
                 <p className="text-lg text-white font-semibold w-3/4">
-                  Start Your Design Career With Design Sprint
+                  {event?.tagline}
                 </p>
                 <div className="inline-flex items-center ">
                   <div className="bg-soft_navy rounded-full p-1">
                     <HiOutlineLocationMarker className="text-white  w-5 h-5" />
                   </div>
-                  <p className="text-white ml-2">Gowork, Bandung</p>
+                  <p className="text-white ml-2">{event?.venueName}</p>
                 </div>
                 <div className="inline-flex items-center ">
                   <div className="bg-soft_navy rounded-full p-1">
                     <IoTimerOutline className="text-white  w-5 h-5" />
                   </div>
-                  <p className="text-white ml-2">15.00 PM WIB</p>
+                  <p className="text-white ml-2">
+                    {new Date(event?.date).toLocaleString("id-ID", {
+                      hour: "numeric",
+                      minute: "numeric",
+                      hour12: true,
+                      timeZone: "Asia/Jakarta",
+                      timeZoneName: "short",
+                    })}
+                  </p>
                 </div>
                 <div className="inline-flex items-center ">
                   <div className="bg-soft_navy rounded-full p-1">
                     <MdOutlineDateRange className="text-white  w-5 h-5" />
                   </div>
-                  <p className="text-white ml-2">22 Agustus 2022</p>
+                  <p className="text-white ml-2">
+                    {new Date(event?.date).toLocaleDateString("id-ID", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })}
+                  </p>
                 </div>
               </div>
               <div className="text-4xl text-white font-bold flex flex-col gap-1 ">
-                $2,980
+                {event?.tickets[0].price.toLocaleString("id-ID", {
+                  style: "currency",
+                  currency: "IDR",
+                  minimumFractionDigits: 0,
+                })}
                 <div className=" border-b border-soft_gray" />
                 <div className=" border-b border-soft_gray" />
               </div>

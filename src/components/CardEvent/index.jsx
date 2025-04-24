@@ -1,19 +1,22 @@
-const CardEvent = () => {
+const CardEvent = ({ event }) => {
   return (
     <div className="w-full max-w-sm bg-white rounded-lg flex flex-col justify-between">
       <img
-        src="/images/event-1.png"
+        src={`${import.meta.env.VITE_HOST_IMAGE_DEV}/${event.image.name}`}
         alt="event"
-        className="rounded-t-lg pb-5"
+        className="rounded-t-lg pb-5 w-full h-auto object-cover max-h-[200px]"
       />
       <div className="px-5 pb-5 h-full w-3/4">
-        <a href="/details">
-          <h5 className="text-lg font-medium  text-navy ">
-            Learn Jira for Sprint Design Venture
-          </h5>
-          <p className="text-sm text-gray my-3">Product Design</p>
+        <a href={`/details/${event._id}`}>
+          <h5 className="text-lg font-medium  text-navy ">{event.title}</h5>
+          <p className="text-sm text-gray my-3">{event.category.name}</p>
           <p className="text-sm text-navy mt-5 font-medium">
-            Bandung, 22 Jan 2022
+            {event.venueName},{" "}
+            {new Date(event.date).toLocaleDateString("id-ID", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })}
           </p>
         </a>
       </div>
