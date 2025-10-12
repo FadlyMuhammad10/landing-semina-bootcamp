@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const CardEvent = ({ event }) => {
   return (
     <div className="w-full max-w-sm bg-white rounded-lg flex flex-col justify-between">
@@ -7,7 +9,7 @@ const CardEvent = ({ event }) => {
         className="rounded-t-lg pb-5 w-full h-auto object-cover max-h-[200px]"
       />
       <div className="px-5 pb-5 h-full w-3/4">
-        <a href={`/details/${event._id}`}>
+        <Link to={`/details/${event._id}`}>
           <h5 className="text-lg font-medium  text-navy ">{event.title}</h5>
           <p className="text-sm text-gray my-3">{event.category.name}</p>
           <p className="text-sm text-navy mt-5 font-medium">
@@ -18,7 +20,7 @@ const CardEvent = ({ event }) => {
               day: "numeric",
             })}
           </p>
-        </a>
+        </Link>
       </div>
     </div>
   );
