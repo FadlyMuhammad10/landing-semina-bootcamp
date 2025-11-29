@@ -38,7 +38,7 @@ const EventDataContainer = (props) => {
           )}
 
           <div className="flex flex-row gap-4 mt-10">
-            {events.map((event, index) => (
+            {events?.map((event, index) => (
               <CardEvent event={event} key={index} />
             ))}
           </div>
