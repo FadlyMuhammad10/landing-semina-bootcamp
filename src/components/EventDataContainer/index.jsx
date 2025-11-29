@@ -10,7 +10,7 @@ const EventDataContainer = (props) => {
   const { type } = props;
 
   const dispatch = useDispatch();
-  const { events, loading, error } = useSelector((state) => state.event);
+  const { events, loading, error } = useSelector((state) => state?.event);
 
   useEffect(() => {
     dispatch(fetchEvents());

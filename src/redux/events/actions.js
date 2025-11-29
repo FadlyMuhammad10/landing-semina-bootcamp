@@ -27,7 +27,7 @@ export const fetchEvents = () => async (dispatch) => {
   try {
     const response = await getData("/events");
 
-    dispatch(successFetchingEvents(response.data));
+    dispatch(successFetchingEvents(response?.data));
   } catch (error) {
     dispatch(errorFetchingEvents(error));
   } finally {
